@@ -1,0 +1,22 @@
+per ogni pixel
+{
+  colore = 0;
+  raggio = { origine, direzione};
+  ripeti
+  {
+    per ogni oggetto nella scena
+    {
+      determina la presenza di intersezione;
+    }
+    se c'e stata l'intersezione
+    {
+      se il punto d'intersezione non e' in ombra
+      {
+	aggiungere il contibuto al colore finale
+      }
+    }
+    colore = color + colore calcolato * fattore di riflessione
+    fattore di riflessione = fatt. riflessione * fatt.riflessione di superficie
+    profondita'++
+   } finche fattore di riflessione == 0 o profondita' massima
+}
