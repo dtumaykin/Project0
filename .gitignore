@@ -1,0 +1,10 @@
+*.iml
+*.ilk
+*.exe
+*.pdb
+*.sdf
+*.filters
+*.user
+*.suo
+Debug/
+ipch/
