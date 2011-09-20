@@ -1,3 +1,4 @@
+// Written by Dan Tumaykin
 #include <iostream>
 
 void main()
