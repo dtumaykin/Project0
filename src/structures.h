@@ -1,4 +1,4 @@
-// strutture dati utilizzate da programma
+// strutture dati e relativi operatori utilizzati da programma
 
 // basic structures
 struct point_t {
@@ -7,6 +7,11 @@ struct point_t {
 
 struct vector_t {
 	double x, y, z;
+};
+
+struct ray_t {
+	point_t src;
+	vector_t dst;
 };
 
 struct color_t {
@@ -75,3 +80,18 @@ struct scene_t {
 	material_t *material;
 
 };
+
+vector_t& operator/ (vector_t &v, double d)
+{
+	v.x /= d;
+	v.y /= d;
+	v.z /= d;
+	return v;
+}
+
+//used for debug print
+std::ostream& operator<< (std::ostream &out, vector_t &vect)
+{
+	out << "(" << vect.x << ", " << vect.y << ", " << vect.z << ")";
+	return out;
+}
