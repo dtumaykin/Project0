@@ -51,7 +51,7 @@ struct prim_t {
 };
 
 struct light_t {
-	point_t x, y, z;
+	double x, y, z;
 };
 
 struct material_t {
