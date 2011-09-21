@@ -94,3 +94,9 @@ std::ostream& operator<< (std::ostream &out, vector_t &vect)
 	out << "(" << vect.x << ", " << vect.y << ", " << vect.z << ")";
 	return out;
 }
+
+std::ostream& operator<< (std::ostream &out, sphere_t &s)
+{
+	out << s.center.x << " " << s.center.y << " " << s.center.z << "   "<<s.r;
+	return out;
+}
