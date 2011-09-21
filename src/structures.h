@@ -44,10 +44,9 @@ struct prim_t {
 	int type; //type from PRIMITIVES
 	int mat; //material id
 
-	union prim { //union with primitives
-		sphere_t sphere;
-		poligon_t poligon;
-	};
+	//memory inefficent, but working solution
+	sphere_t sphere;
+	poligon_t poligon;
 };
 
 struct light_t {

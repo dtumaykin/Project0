@@ -65,9 +65,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\config.h" />
     <ClInclude Include="..\src\structures.h" />
     <ClInclude Include="..\src\util.h" />
   </ItemGroup>
