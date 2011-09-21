@@ -1,6 +1,7 @@
 #include <iostream>
 #include "structures.h"
 #include "util.h"
+#include "config.h"
 
 void main()
 {
