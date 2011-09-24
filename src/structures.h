@@ -1,3 +1,5 @@
+#ifndef P0_STRUCT_H
+#define P0_STRUCT_H
 // strutture dati e relativi operatori utilizzati da programma
 
 // basic structures
@@ -60,8 +62,6 @@ struct material_t {
 	double coefRefract;
 };
 
-
-
 struct scene_t {
 
 	int screenResX;
@@ -80,7 +80,7 @@ struct scene_t {
 
 };
 
-vector_t& operator/ (vector_t &v, double d)
+inline vector_t& operator/ (vector_t &v, double d)
 {
 	v.x /= d;
 	v.y /= d;
@@ -89,14 +89,16 @@ vector_t& operator/ (vector_t &v, double d)
 }
 
 //used for debug print
-std::ostream& operator<< (std::ostream &out, vector_t &vect)
+inline std::ostream& operator<< (std::ostream &out, vector_t &vect)
 {
 	out << "(" << vect.x << ", " << vect.y << ", " << vect.z << ")";
 	return out;
 }
 
-std::ostream& operator<< (std::ostream &out, sphere_t &s)
+inline std::ostream& operator<< (std::ostream &out, sphere_t &s)
 {
-	out << s.center.x << " " << s.center.y << " " << s.center.z << "   "<<s.r;
+	out << s.center.x << " " << s.center.y << " " << s.center.z << "   "<< s.r;
 	return out;
 }
+
+#endif

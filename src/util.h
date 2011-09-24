@@ -1,6 +1,9 @@
-// funzioni utili per semplificarci la vita
+#ifndef P0_UTIL_H
+#define P0_UTIL_H
 
 #include <cmath>
+
+// funzioni utili per semplificarci la vita
 
 inline double dot(vector_t &vect1, vector_t &vect2)
 {
@@ -17,3 +20,5 @@ inline vector_t &norm(vector_t &vect)
 	vect = vect/length(vect);
 	return vect;
 }
+
+#endif
