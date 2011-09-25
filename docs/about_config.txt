@@ -1,0 +1,9 @@
+una stringa di configurazione e' composta da un opcode di 4 caratteri e i suoi parametri
+
+opcode disponibili:
+reso <resX> <resY>
+size <sizeX> <sizeY>
+sphr <centerX> <centerY> <centerZ> <radius> <matId>
+poli <aX> <aY> <aZ> <bX> <bY> <bZ> <cX> <cY> <cZ> <matId>
+lght <posX> <posY> <posZ>
+matr <Id> <colR> <colG> <colB> <cfDiff> <cfRefl> <cfRefr>
