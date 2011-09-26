@@ -56,6 +56,7 @@ struct light_t {
 };
 
 struct material_t {
+	int mId;
 	color_t col;
 	double coefDiffuse;
 	double coefReflect;

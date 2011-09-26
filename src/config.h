@@ -9,10 +9,13 @@ enum OPCODES
 	SPHR,
 	POLI,
 	LGHT,
-	MATR
+	MATR,
+	UNKN
 };
 
-int loadConfig(char * path, scene_t &scene); //return 0 in case of bad config
+int loadConfig(char * path, scene_t &scene); // return 0 in case of bad config
+
+int getOpcode(std::ifstream &ifs);
 
 scene_t config(); // loads default "config.cfg" file and returns a scene, implemented by secco92
 
