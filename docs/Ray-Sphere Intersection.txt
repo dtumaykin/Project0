@@ -1,0 +1,28 @@
+Sistema:
+Pi = Po + t * vD
+(Pi-Pc)^2 = r^2
+
+
+(Po + t*vD - Pc)^2 = r^2
+
+//consiglio vivamente di calcolare Po - Pc una volta sola
+t^2 * vD^2 + 2 * t * vD * (Po - Pc) + (Po - Pc)^2 - r^2 = 0
+
+B = vD * (Po - Pc)
+D = B*B - (Po - Pc)^2 + r^2
+// controllare se D > 0
+
+t = B +- sqrt(D)
+
+/*
+   Pi - vettore, punti d'intersezione
+   Po - vettore, punto d'origine di raggio
+   t - distanza/lunghezza di raggio fino a intersezione
+   Pc - vettore, centro della sfera
+   r - raggio della sfera
+
+   vi ricordo che:
+    - vettore * vettore = numero (c'e funzione dot() pronta, oppure scrivere overload)
+    - vettore * numero = vettore (si puo scriver overload)
+*/
+

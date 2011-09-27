@@ -1,6 +1,7 @@
 #ifndef P0_STRUCT_H
 #define P0_STRUCT_H
 // strutture dati e relativi operatori utilizzati da programma
+#include <iostream>
 
 // basic structures
 struct point_t {

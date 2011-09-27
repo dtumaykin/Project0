@@ -1,6 +1,9 @@
 #ifndef P0_CONFIG_H
 #define P0_CONFIG_H
 
+#include <iostream>
+#include <fstream>
+#include "structures.h"
 
 enum OPCODES 
 {

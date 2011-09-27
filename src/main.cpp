@@ -3,6 +3,7 @@
 #include "structures.h"
 #include "util.h"
 #include "config.h"
+#include "tracer.h"
 
 #define _CRT_SECURE_NO_WARNINGS // no warnings for fscanf(), fopen()
 

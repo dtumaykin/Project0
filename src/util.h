@@ -1,6 +1,7 @@
 #ifndef P0_UTIL_H
 #define P0_UTIL_H
 
+#include "structures.h"
 #include <cmath>
 
 // funzioni utili per semplificarci la vita
