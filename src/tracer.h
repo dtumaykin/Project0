@@ -5,4 +5,6 @@
 
 bool getIntersection(prim_t &p, ray_t &r, double &t);
 
+color_t getColor(int x, int y); // return pixel color, also calculater initial ray parameters
+
 #endif
