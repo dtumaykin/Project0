@@ -4,6 +4,7 @@ Pi = Po + t * vD
 
 
 (Po + t*vD - Pc)^2 = r^2
+(t*vD + (Po - Pc))^2 = r^2
 
 //consiglio vivamente di calcolare Po - Pc una volta sola
 t^2 * vD^2 + 2 * t * vD * (Po - Pc) + (Po - Pc)^2 - r^2 = 0
