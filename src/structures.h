@@ -8,7 +8,7 @@ struct vector_t {
 	double x, y, z;
 };
 
-typedef vector_t point_t;
+typedef vector_t point_t; // conceptually different, but have same implementation
 
 struct ray_t {
 	point_t src;
