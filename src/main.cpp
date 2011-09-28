@@ -9,8 +9,18 @@
 
 void main()
 {
+	int status; // need it for crash messages
 
 	// config - una funzione che da un file di configurazione prende i valori e ritorna una scena completa
+	scene_t scene;
+
+	status = loadConfig("config.cfg", scene);
+	if(!status)
+	{
+		printf("\nBad config!");
+		std::cin.get();
+		return;
+	}
 
 	// render - trasforma scena completa in un array di pixel
 

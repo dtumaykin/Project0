@@ -71,6 +71,7 @@ int loadConfig(char * path, scene_t &scene)
 		case SIZE:
 			ifs >> scene.screenSizeX;
 			ifs >> scene.screemSizeY;
+			break;
 		case SPHR:
 			prim_t s;
 			s.type = SPHERE;
@@ -107,12 +108,13 @@ int loadConfig(char * path, scene_t &scene)
 			tempMat.push_back(m);
 			break;
 		case UNKN:
+			return 0;
 			break;
 		}
 	}
 
 	// now we need to push elements into scene
-	scene.primCount = tempMat.size();
+	scene.primCount = tempPrim.size();
 	scene.lightCount = tempLight.size();
 	scene.matCount = tempMat.size();
 
