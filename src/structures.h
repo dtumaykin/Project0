@@ -4,13 +4,11 @@
 #include <iostream>
 
 // basic structures
-struct point_t {
-	double x, y, z;
-};
-
 struct vector_t {
 	double x, y, z;
 };
+
+typedef vector_t point_t;
 
 struct ray_t {
 	point_t src;
