@@ -12,7 +12,7 @@ void main()
 {
 	int status; // need it for crash messages
 
-	// config - una funzione che da un file di configurazione prende i valori e ritorna una scena completa
+	//loading config
 	scene_t scene;
 
 	status = loadConfig("config.cfg", scene);
@@ -23,10 +23,30 @@ void main()
 		return;
 	}
 
-	// render - trasforma scena completa in un array di pixel
+	BMP output;
+	output.SetSize(scene.screenResX, scene.screenResY);
 
+	for(int i = 0; i < scene.screenResX; i++)
+		for(int j = 0; j < scene.screenResY; j++)
+		{
+			color_t r = getColor(i, j);
+			
+			//color must be in range 0 - 255
+			r.r *= 255.0f;
+			r.g *= 255.0f;
+			r.b *= 255.0f;
 
+			if(r.r > 255) r.r = 255;
+			if(r.g > 255) r.g = 255;
+			if(r.b > 255) r.b = 255;
 
-	// output - array di pixel diventa un immagine
+			//write pixels to buffer
+			output(i, j)->Red	= ebmpBYTE(r.r);
+			output(i, j)->Green = ebmpBYTE(r.g);
+			output(i, j)->Blue	= ebmpBYTE(r.b);
+		}
+
+	//writing output image
+	output.WriteToFile("output.bmp");
 
 }
