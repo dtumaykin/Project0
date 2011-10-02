@@ -70,7 +70,7 @@ int loadConfig(char * path, scene_t &scene)
 			break;
 		case SIZE:
 			ifs >> scene.screenSizeX;
-			ifs >> scene.screemSizeY;
+			ifs >> scene.screenSizeY;
 			break;
 		case SPHR:
 			prim_t s;

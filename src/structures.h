@@ -67,7 +67,7 @@ struct scene_t {
 	int screenResX;
 	int screenResY;
 	double screenSizeX;
-	double screemSizeY;
+	double screenSizeY;
 
 	//point_t cam; //camera position, now unused
 
