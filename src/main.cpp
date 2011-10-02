@@ -4,6 +4,7 @@
 #include "util.h"
 #include "config.h"
 #include "tracer.h"
+#include "easybmp\EasyBMP.h"
 
 #define _CRT_SECURE_NO_WARNINGS // no warnings for fscanf(), fopen()
 
@@ -23,6 +24,8 @@ void main()
 	}
 
 	// render - trasforma scena completa in un array di pixel
+
+
 
 	// output - array di pixel diventa un immagine
 

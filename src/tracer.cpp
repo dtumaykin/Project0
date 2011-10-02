@@ -11,6 +11,6 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 color_t getColor(int x, int y, scene_t &scene)
 {
-	color_t c;
+	color_t c = { 0, 0, 0};
 	return c;
 }
