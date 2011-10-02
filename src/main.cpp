@@ -29,7 +29,7 @@ void main()
 	for(int i = 0; i < scene.screenResX; i++)
 		for(int j = 0; j < scene.screenResY; j++)
 		{
-			color_t r = getColor(i, j);
+			color_t r = getColor(i, j, scene);
 			
 			//color must be in range 0 - 255
 			r.r *= 255.0f;
