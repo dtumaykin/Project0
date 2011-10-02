@@ -27,14 +27,21 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 		if(x1<x2)
 		{
-			t = x1;     
-			return 1;
+			if(t > x1) 
+			{
+				t = x1;     
+				return 1;
+			}
 		}
 		else
 		{
-			t = x2;
-			return 1;
+			if(t > x1)
+			{
+				t = x2;
+				return 1;
+			}
 		}
+		return 0;
 		
 		break;
 
@@ -56,7 +63,7 @@ color_t getColor(int x, int y, scene_t &scene)
 	color_t c = { 0, 0, 0};
 	prim_t p;
 	material_t m;
-	double t;
+	double t = 2000.0f;
 
 	double pixelSizeX = scene.screenSizeX/scene.screenResX;
 	double pixelSizeY = scene.screenSizeY/scene.screenResY;
@@ -68,7 +75,7 @@ color_t getColor(int x, int y, scene_t &scene)
 		if(getIntersection(scene.prim[i], ray, t))
 		{
 			p = scene.prim[i];
-			m = scene.material[p.mat];
+			m = scene.material[p.mat - 1];
 			c = m.col;
 		}
 	
