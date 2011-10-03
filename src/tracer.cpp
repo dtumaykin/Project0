@@ -59,7 +59,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 color_t getColor(int x, int y, scene_t &scene)
 {
-	color_t c = { 0, 0, 0};
+	color_t c = { 0.15f, 0.15f, 0.15f};
 	int currPrimitive = -1;
 	prim_t *p;
 	material_t *m;
