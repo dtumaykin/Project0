@@ -19,11 +19,10 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		B = r.dst * PoPc; 
 		D = B*B - PoPc*PoPc + p.sphere.r*p.sphere.r; 
 
-		if(D < 0.0f)
-			return 0;
+		if(D < 0.0f) return 0;
 
-		x1 = B + sqrt(D);
-		x2 = B - sqrt(D);
+		x1 = B - sqrt(D);
+		x2 = B + sqrt(D);
 
 		if(x1 < x2)
 		{
