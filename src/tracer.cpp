@@ -102,7 +102,7 @@ color_t trace(ray_t &ray, scene_t &scene)
 	bool inShadow;
 
 	lightRay.src = intrPoint;
-	vector_t normal = intrPoint - p->sphere.center;
+	vector_t normal = intrPoint - p->sphere.center; // normal in intersection point
 	norm(normal);
 
 
@@ -120,7 +120,10 @@ color_t trace(ray_t &ray, scene_t &scene)
 			}
 
 		if(!inShadow)
-			c = m->col * m->coefDiffuse;
+		{
+			double lambert = (lightRay.dst * normal);
+			c = m->col * m->coefDiffuse * lambert;
+		}
 	}
 
 	return c;
