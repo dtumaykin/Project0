@@ -52,6 +52,7 @@ scene_t config()
 int loadConfig(char * path, scene_t &scene)
 {
 	std::ifstream ifs(path);
+	int line = 0;
 
 	if(ifs.bad()) return 0;
 
@@ -62,6 +63,7 @@ int loadConfig(char * path, scene_t &scene)
 	
 	while(!ifs.eof())
 	{
+		line++;
 		switch(getOpcode(ifs))
 		{
 		case RESO:
@@ -108,7 +110,7 @@ int loadConfig(char * path, scene_t &scene)
 			tempMat.push_back(m);
 			break;
 		case UNKN:
-			return 0;
+			return line;
 			break;
 		}
 	}
@@ -133,7 +135,7 @@ int loadConfig(char * path, scene_t &scene)
 	for(int i = 0; i < scene.matCount; i++)
 		scene.material[i] = tempMat[i];
 
-	return 1;
+	return 0;
 }
 
 int getOpcode(std::ifstream &ifs)

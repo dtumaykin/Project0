@@ -16,9 +16,9 @@ void main()
 	scene_t scene;
 
 	status = loadConfig("config.cfg", scene);
-	if(!status)
+	if(status)
 	{
-		printf("\nBad config!");
+		printf("\nBad config: line %d!", status);
 		std::cin.get();
 		return;
 	}
