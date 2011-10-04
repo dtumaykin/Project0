@@ -60,8 +60,8 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 color_t getColor(int x, int y, scene_t &scene)
 {
 	color_t c = { 0.15f, 0.15f, 0.15f};
-	prim_t *p;
-	material_t *m;
+	prim_t *p = NULL;
+	material_t *m = NULL;
 	double t = 2000.0f;
 
 	double pixelSizeX = scene.screenSizeX/scene.screenResX;
