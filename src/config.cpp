@@ -103,7 +103,7 @@ int loadConfig(char * path, scene_t &scene)
 		case MATR:
 			material_t m;
 			ifs >> m.mId;
-			ifs >> m.col.r >> m.col.b >> m.col.g;
+			ifs >> m.col.r >> m.col.g >> m.col.b;
 			ifs >> m.coefDiffuse;
 			ifs >> m.coefReflect;
 			ifs >> m.coefRefract;
