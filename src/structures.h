@@ -9,6 +9,7 @@ struct vector_t {
 };
 
 typedef vector_t point_t; // conceptually different, but have same implementation
+typedef vector_t light_t;
 
 struct ray_t {
 	point_t src;
@@ -50,9 +51,9 @@ struct prim_t {
 	poligon_t poligon;
 };
 
-struct light_t {
-	double x, y, z;
-};
+//struct light_t {
+//	double x, y, z;
+//};
 
 struct material_t {
 	int mId;

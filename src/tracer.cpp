@@ -78,6 +78,7 @@ color_t trace(ray_t &ray, scene_t &scene)
 	prim_t *p = NULL;
 	material_t *m = NULL;
 	double t = 2000.0f;
+	double temp;
 
 	//get nearest intersection
 	for(int i = 0; i < scene.primCount; i++)
@@ -90,8 +91,23 @@ color_t trace(ray_t &ray, scene_t &scene)
 	for(int i = 0; i < scene.matCount; i++)
 		if(scene.material[i].mId == p->mat)
 			m = &scene.material[i];
-	
-	if(m) c = m->col;
+
+	if(!m) return c; // non existant material
+
+	//point of intersection
+	ray.src = ray.src + ray.dst * t;
+	color_t lightAcc = { 0.0f, 0.0f, 0.0f};
+	for(int i = 0; i < scene.lightCount; i++)
+	{
+		ray.dst = scene.light[i];
+		norm(ray.dst);
+		for(int j = 0; j < scene.primCount; j++)
+			if(getIntersection(scene.prim[i], ray, temp))
+				continue;
+		lightAcc += m->coefDiffuse;
+	}
+
+	c = m->col * lightAcc;
 
 	return c;
 }
