@@ -74,7 +74,8 @@ color_t getColor(int x, int y, scene_t &scene)
 
 color_t trace(ray_t &ray, scene_t &scene)
 {
-	color_t c = { 0.15f, 0.15f, 0.15f};
+	color_t background = { 0.15f, 0.15f, 0.15f};
+	color_t c = { 0.0f, 0.0f, 0.0f };
 	prim_t *p = NULL;
 	material_t *m = NULL;
 	double t = 2000.0f;
@@ -85,29 +86,42 @@ color_t trace(ray_t &ray, scene_t &scene)
 		if(getIntersection(scene.prim[i], ray, t))
 			p = &scene.prim[i];
 			
-	if(!p) return c; // no intersections
+	if(!p) return background; // no intersections
 
 	//find material for primitive
 	for(int i = 0; i < scene.matCount; i++)
 		if(scene.material[i].mId == p->mat)
 			m = &scene.material[i];
 
-	if(!m) return c; // non existant material
+	if(!m) return background; // non existant material
 
-	//point of intersection
-	ray.src = ray.src + ray.dst * t;
-	color_t lightAcc = { 0.0f, 0.0f, 0.0f};
+	//calculation shadows
+	if(t < 0.0f) t = -t; //t is absolute value
+	vector_t intrPoint = ray.src + ray.dst * t;
+	ray_t lightRay;
+	bool inShadow;
+
+	lightRay.src = intrPoint;
+	vector_t normal = intrPoint - p->sphere.center;
+	norm(normal);
+
+
 	for(int i = 0; i < scene.lightCount; i++)
 	{
-		ray.dst = scene.light[i];
-		norm(ray.dst);
+		inShadow = false;
+		lightRay.dst = scene.light[i] - intrPoint;
+		if(normal * lightRay.dst <= 0.0f) continue;
+		norm(lightRay.dst);
 		for(int j = 0; j < scene.primCount; j++)
-			if(getIntersection(scene.prim[i], ray, temp))
-				continue;
-		lightAcc += m->coefDiffuse;
-	}
+			if(getIntersection(scene.prim[i], lightRay, temp))
+			{
+				inShadow = true;
+				break;
+			}
 
-	c = m->col * lightAcc;
+		if(!inShadow)
+			c = m->col * m->coefDiffuse;
+	}
 
 	return c;
 }
