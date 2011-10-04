@@ -59,10 +59,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 color_t getColor(int x, int y, scene_t &scene)
 {
-	color_t c = { 0.15f, 0.15f, 0.15f};
-	prim_t *p = NULL;
-	material_t *m = NULL;
-	double t = 2000.0f;
+	color_t c = { 0.0f, 0.0f, 0.0f};
 
 	double pixelSizeX = scene.screenSizeX/scene.screenResX;
 	double pixelSizeY = scene.screenSizeY/scene.screenResY;
@@ -70,12 +67,24 @@ color_t getColor(int x, int y, scene_t &scene)
 	ray_t ray = { {x * pixelSizeX, y * pixelSizeY, -1000.0f}, {0.0f, 0.0f, 1.0f}};
 	norm(ray.dst);
 
+	c = trace(ray, scene);
+
+	return c;
+}
+
+color_t trace(ray_t &ray, scene_t &scene)
+{
+	color_t c = { 0.15f, 0.15f, 0.15f};
+	prim_t *p = NULL;
+	material_t *m = NULL;
+	double t = 2000.0f;
+
 	//get nearest intersection
 	for(int i = 0; i < scene.primCount; i++)
 		if(getIntersection(scene.prim[i], ray, t))
 			p = &scene.prim[i];
 			
-	if(!p) return c;
+	if(!p) return c; // no intersections
 
 	//find material for primitive
 	for(int i = 0; i < scene.matCount; i++)
