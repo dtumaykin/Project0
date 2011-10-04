@@ -7,5 +7,10 @@
 *.user
 *.suo
 *.opensdf
+*.obj
+*.log
+*.tlog
+*.lastbuildstate
+*.manifest
 Debug/
 ipch/
