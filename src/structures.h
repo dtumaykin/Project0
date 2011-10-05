@@ -20,10 +20,11 @@ struct color_t {
 	double r, g, b;
 };
 
-struct pixel_t {
+//don't need this
+/*struct pixel_t {
 	double r, g, b;
 	int i, j;
-};
+};*/
 
 // primitives
 enum PRIMITIVES

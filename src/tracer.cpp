@@ -76,7 +76,7 @@ color_t getColor(int x, int y, scene_t &scene)
 	double pixelSizeX = scene.screenSizeX/scene.screenResX;
 	double pixelSizeY = scene.screenSizeY/scene.screenResY;
 
-	ray_t ray = { {x * pixelSizeX, y * pixelSizeY, -1000.0f}, {0.0f, 0.0f, 10000.0f}};
+	ray_t ray = { {x * pixelSizeX, y * pixelSizeY, -1000.0f}, {0.0f, 0.0f, 1.0f}};
 	norm(ray.dst);
 
 	c = trace(ray, scene);
@@ -117,20 +117,19 @@ color_t trace(ray_t &ray, scene_t &scene)
 	vector_t normal = intrPoint - p->sphere.center; // normal in intersection point
 	norm(normal);
 
-
 	for(int i = 0; i < scene.lightCount; i++)
 	{
 		inShadow = false;
 		lightRay.dst = scene.light[i] - intrPoint;
-		if(normal * lightRay.dst <= 0.0f) continue;
-		temp = lightRay.dst*lightRay.dst;
+		
+		if(normal * lightRay.dst <= 0.0f) continue; // pointing in opposite directions
+		temp = sqrt(lightRay.dst*lightRay.dst);
+		
 		norm(lightRay.dst);
 
-		prim_t tempP;
 		for(int j = 0; j < scene.primCount; j++)
-			if(getIntersection(scene.prim[i], lightRay, temp))
+			if(getIntersection(scene.prim[j], lightRay, temp))
 			{
-				tempP = scene.prim[i];
 				inShadow = true;
 				break;
 			}
