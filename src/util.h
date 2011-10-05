@@ -29,11 +29,19 @@ inline vector_t operator* (vector_t &v, double &t)
 	return vt;
 }
 
-inline void operator+= (color_t &c, double &i)
+inline double operator+= (color_t &c, double &i)
 {
 	c.b += i;
 	c.g += i;
 	c.r += i;
+}
+
+inline color_t& operator+= (color_t &s, color_t &d)
+{
+	s.r += d.r;
+	s.g += d.g;
+	s.b += d.b;
+	return s;
 }
 
 inline color_t operator* (color_t &c, double &i)

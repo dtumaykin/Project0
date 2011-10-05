@@ -8,6 +8,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 {
 	point_t PoPc;
 	double B, D, x1, x2;
+	bool rval = false;
 
 	//algoritm depends on primitive type
 	switch(p.type)
@@ -24,7 +25,18 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		x1 = -B - sqrt(D);
 		x2 = -B + sqrt(D);
 
-		if(x1 < x2)
+		if(x1 > 0.1f && x1 < t)
+		{
+			t = x1;
+			rval = true;
+		}
+		if(x2 > 0.1f && x2 < t)
+		{
+			t = x2;
+			rval = true;
+		}
+		return rval;
+		/*if(x1 < x2)
 		{
 			if(t > x1) 
 			{
@@ -39,7 +51,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 				t = x2;
 				return 1;
 			}
-		}
+		}*/
 		return 0;
 		
 		break;
@@ -64,7 +76,7 @@ color_t getColor(int x, int y, scene_t &scene)
 	double pixelSizeX = scene.screenSizeX/scene.screenResX;
 	double pixelSizeY = scene.screenSizeY/scene.screenResY;
 
-	ray_t ray = { {x * pixelSizeX, y * pixelSizeY, -1000.0f}, {0.0f, 0.0f, 1.0f}};
+	ray_t ray = { {x * pixelSizeX, y * pixelSizeY, -1000.0f}, {0.0f, 0.0f, 10000.0f}};
 	norm(ray.dst);
 
 	c = trace(ray, scene);
@@ -111,12 +123,14 @@ color_t trace(ray_t &ray, scene_t &scene)
 		inShadow = false;
 		lightRay.dst = scene.light[i] - intrPoint;
 		if(normal * lightRay.dst <= 0.0f) continue;
-
+		temp = lightRay.dst*lightRay.dst;
 		norm(lightRay.dst);
 
+		prim_t tempP;
 		for(int j = 0; j < scene.primCount; j++)
 			if(getIntersection(scene.prim[i], lightRay, temp))
 			{
+				tempP = scene.prim[i];
 				inShadow = true;
 				break;
 			}
@@ -124,7 +138,10 @@ color_t trace(ray_t &ray, scene_t &scene)
 		if(!inShadow)
 		{
 			double lambert = (lightRay.dst * normal);
-			c = m->col * m->coefDiffuse * lambert;
+			//c.r += m->col.r * m->coefDiffuse;// * lambert;
+			//c.g += m->col.g * m->coefDiffuse;// * lambert;
+			//c.b += m->col.b * m->coefDiffuse;// * lambert;
+			c += m->col * m->coefDiffuse * lambert;
 		}
 	}
 
