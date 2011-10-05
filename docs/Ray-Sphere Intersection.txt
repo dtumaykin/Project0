@@ -13,7 +13,7 @@ B = vD * (Po - Pc)
 D = B*B - (Po - Pc)^2 + r^2
 // controllare se D > 0
 
-t = B +- sqrt(D)
+t = -B +- sqrt(D)
 
 /*
    Pi - vettore, punti d'intersezione

@@ -21,8 +21,8 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 		if(D < 0.0f) return 0;
 
-		x1 = B - sqrt(D);
-		x2 = B + sqrt(D);
+		x1 = -B - sqrt(D);
+		x2 = -B + sqrt(D);
 
 		if(x1 < x2)
 		{
@@ -95,8 +95,8 @@ color_t trace(ray_t &ray, scene_t &scene)
 
 	if(!m) return background; // non existant material
 
+	
 	//calculation shadows
-	if(t < 0.0f) t = -t; //t is absolute value
 	vector_t intrPoint = ray.src + ray.dst * t;
 	ray_t lightRay;
 	bool inShadow;
@@ -111,7 +111,9 @@ color_t trace(ray_t &ray, scene_t &scene)
 		inShadow = false;
 		lightRay.dst = scene.light[i] - intrPoint;
 		if(normal * lightRay.dst <= 0.0f) continue;
+
 		norm(lightRay.dst);
+
 		for(int j = 0; j < scene.primCount; j++)
 			if(getIntersection(scene.prim[i], lightRay, temp))
 			{
