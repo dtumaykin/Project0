@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 
 #include "structures.h"
 #include "util.h"
@@ -30,6 +31,11 @@ void main()
 		for(int j = 0; j < scene.screenResY; j++)
 		{
 			color_t r = getColor(i, j, scene);
+
+			//pseudo photo exposure
+			r.r = (1.0f - exp(r.r * -1.0f));
+			r.g = (1.0f - exp(r.g * -1.0f));
+			r.b = (1.0f - exp(r.b * -1.0f));
 			
 			//color must be in range 0 - 255
 			r.r *= 255.0f;
