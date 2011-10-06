@@ -79,12 +79,12 @@ color_t getColor(int x, int y, scene_t &scene)
 	ray_t ray = { {x * pixelSizeX, y * pixelSizeY, -1000.0f}, {0.0f, 0.0f, 1.0f}};
 	norm(ray.dst);
 
-	c = trace(ray, scene);
+	c = trace(ray, scene, 0);
 
 	return c;
 }
 
-color_t trace(ray_t &ray, scene_t &scene)
+color_t trace(ray_t &ray, scene_t &scene, int depth)
 {
 	color_t background = { 0.15f, 0.15f, 0.15f};
 	color_t c = { 0.0f, 0.0f, 0.0f };
@@ -92,6 +92,8 @@ color_t trace(ray_t &ray, scene_t &scene)
 	material_t *m = NULL;
 	double t = 2000.0f;
 	double temp;
+
+	if(depth > 5) return c; //if we reach max depth of recursion
 
 	//get nearest intersection
 	for(int i = 0; i < scene.primCount; i++)
@@ -108,7 +110,7 @@ color_t trace(ray_t &ray, scene_t &scene)
 	if(!m) return background; // non existant material
 
 	
-	//calculation shadows
+	//calculating shadows
 	vector_t intrPoint = ray.src + ray.dst * t;
 	ray_t lightRay;
 	bool inShadow;
@@ -143,6 +145,15 @@ color_t trace(ray_t &ray, scene_t &scene)
 			c += m->col * m->coefDiffuse * lambert;
 		}
 	}
+
+	//calculating reflections
+	ray_t reflRay;
+	double refl = ray.dst * normal * 2.0f;
+
+	reflRay.src = intrPoint;
+	reflRay.dst = ray.dst - normal * refl;
+
+	c += trace(reflRay, scene, depth + 1) * m->coefReflect;
 
 	return c;
 }
