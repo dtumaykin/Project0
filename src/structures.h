@@ -30,7 +30,7 @@ struct color_t {
 enum PRIMITIVES
 {
 	SPHERE,
-	POLIGON,
+	POLYGON,
 	CONSTRUCTOR
 };
 

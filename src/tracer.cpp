@@ -56,7 +56,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		
 		break;
 
-	case POLIGON: //poligono
+	case POLYGON: //poligono
 
 		break;
 
@@ -138,11 +138,15 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 
 		if(!inShadow)
 		{
+			//lambert
 			double lambert = (lightRay.dst * normal);
 			//c.r += m->col.r * m->coefDiffuse;// * lambert;
 			//c.g += m->col.g * m->coefDiffuse;// * lambert;
 			//c.b += m->col.b * m->coefDiffuse;// * lambert;
 			c += m->col * m->coefDiffuse * lambert;
+
+			//blinn
+
 		}
 	}
 

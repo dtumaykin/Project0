@@ -10,7 +10,7 @@ enum OPCODES
 	RESO,
 	SIZE,
 	SPHR,
-	POLI,
+	POLY,
 	LGHT,
 	MATR,
 	UNKN

@@ -84,9 +84,9 @@ int loadConfig(char * path, scene_t &scene)
 			ifs >> s.mat;
 			tempPrim.push_back(s);
 			break;
-		case POLI:
+		case POLY:
 			prim_t p;
-			p.type = POLIGON;
+			p.type = POLYGON;
 			ifs >> p.poligon.ptA.x >> p.poligon.ptA.y >> p.poligon.ptA.z;
 			ifs >> p.poligon.ptB.x >> p.poligon.ptB.y >> p.poligon.ptB.z;
 			ifs >> p.poligon.ptC.x >> p.poligon.ptC.y >> p.poligon.ptC.z;
@@ -148,7 +148,7 @@ int getOpcode(std::ifstream &ifs)
 	if(opcode == "reso") return RESO;
 	if(opcode == "size") return SIZE;
 	if(opcode == "sphr") return SPHR;
-	if(opcode == "poli") return POLI;
+	if(opcode == "poly") return POLY;
 	if(opcode == "lght") return LGHT;
 	if(opcode == "matr") return MATR;
 
