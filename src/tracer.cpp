@@ -146,7 +146,13 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 			c += m->col * m->coefDiffuse * lambert;
 
 			//blinn
+			vector_t blinnDst = lightRay.dst - ray.dst;
+			norm(blinnDst);
 
+			double blinn = blinnDst * normal;
+			blinn = m->coefReflect * pow(blinn, (double)100.0f);
+
+			c += m->col * blinn;
 		}
 	}
 
