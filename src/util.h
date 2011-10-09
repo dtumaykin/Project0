@@ -63,7 +63,8 @@ inline double length(vector_t &vect)
 
 inline vector_t &norm(vector_t &vect)
 {
-	vect = vect/length(vect);
+	double temp = 1.0f/length(vect); // mul is faster than div
+	vect = vect*temp;
 	return vect;
 }
 

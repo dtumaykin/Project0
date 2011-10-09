@@ -93,7 +93,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	double t = 2000.0f;
 	double temp;
 
-	if(depth > 5) return c; //if we reach max depth of recursion
+	if(depth > 3) return c; //if we reach max depth of recursion
 
 	//get nearest intersection
 	for(int i = 0; i < scene.primCount; i++)
@@ -110,13 +110,13 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	if(!m) return background; // non existant material
 
 	
-	//calculating shadows
+	//calculating shadows/lighting
 	vector_t intrPoint = ray.src + ray.dst * t;
 	ray_t lightRay;
 	bool inShadow;
 
 	lightRay.src = intrPoint;
-	vector_t normal = intrPoint - p->sphere.center; // normal in intersection point
+	vector_t normal = getNormal(*p, intrPoint); // normal in intersection point
 	norm(normal);
 
 	for(int i = 0; i < scene.lightCount; i++)
@@ -166,4 +166,21 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	c += trace(reflRay, scene, depth + 1) * m->coefReflect;
 
 	return c;
+}
+
+vector_t getNormal(prim_t &p, point_t &intrPoint)
+{
+	vector_t normal;
+	switch(p.type)
+	{
+	case SPHERE:
+		normal = intrPoint - p.sphere.center;
+		norm(normal);
+		break;
+	case POLYGON:
+		break;
+	case CONSTRUCTOR:
+		break;
+	}
+	return normal;
 }
