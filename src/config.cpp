@@ -6,6 +6,7 @@
 
 #include "structures.h"
 #include "config.h"
+#include "util.h"
 
 
 scene_t config()
@@ -113,6 +114,7 @@ int loadConfig(char * path, scene_t &scene)
 			prim_t pl;
 			pl.type = PLANE;
 			ifs >> pl.plane.n.x >> pl.plane.n.y >> pl.plane.n.z;
+			norm(pl.plane.n);
 			ifs >> pl.plane.d;
 			ifs >> pl.mat;
 			tempPrim.push_back(pl);

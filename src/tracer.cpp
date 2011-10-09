@@ -6,9 +6,13 @@
 
 bool getIntersection(prim_t &p, ray_t &r, double &t)
 {
+	//sphere intersection
 	point_t PoPc;
 	double B, D, x1, x2;
 	bool rval = false;
+
+	//plane intersection
+	double pN, pD, pT;
 
 	//algoritm depends on primitive type
 	switch(p.type)
@@ -52,7 +56,6 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 				return 1;
 			}
 		}*/
-		return 0;
 		
 		break;
 
@@ -61,6 +64,18 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		break;
 
 	case PLANE:
+
+		pN = -1.0f *(p.plane.d + p.plane.n * r.src); // d + N * Po
+		pD = r.dst * p.plane.n; // vD * N
+
+		if(!pD) return 0; // ray and norm parallel
+
+		pT = pN / pD;
+
+		if(pT <= 0.0f || pT > t) return 0; // if behind or there's another intersection before
+		
+		t = pT - 0.0001f; // fix for precision problems
+		return true;
 
 		break;
 
@@ -94,7 +109,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	color_t c = { 0.0f, 0.0f, 0.0f };
 	prim_t *p = NULL;
 	material_t *m = NULL;
-	double t = 2000.0f;
+	double t = 5000.0f;
 	double temp;
 
 	if(depth > 3) return c; //if we reach max depth of recursion
@@ -183,6 +198,11 @@ vector_t getNormal(prim_t &p, point_t &intrPoint)
 	case POLYGON:
 		break;
 	case PLANE:
+		normal = p.plane.n; // already normalized
+		//temporary fix
+		normal.x = - normal.x; 
+		normal.y = - normal.y;
+		normal.z = - normal.z;
 		break;
 	case CONSTRUCTOR:
 		break;
