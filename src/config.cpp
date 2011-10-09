@@ -109,6 +109,14 @@ int loadConfig(char * path, scene_t &scene)
 			ifs >> m.coefRefract;
 			tempMat.push_back(m);
 			break;
+		case PLNE:
+			prim_t pl;
+			pl.type = PLANE;
+			ifs >> pl.plane.n.x >> pl.plane.n.y >> pl.plane.n.z;
+			ifs >> pl.plane.d;
+			ifs >> pl.mat;
+			tempPrim.push_back(pl);
+			break;
 		case UNKN:
 			return line;
 			break;
@@ -151,6 +159,7 @@ int getOpcode(std::ifstream &ifs)
 	if(opcode == "poly") return POLY;
 	if(opcode == "lght") return LGHT;
 	if(opcode == "matr") return MATR;
+	if(opcode == "plne") return PLNE;
 
 	return UNKN;
 }

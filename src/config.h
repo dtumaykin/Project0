@@ -13,6 +13,7 @@ enum OPCODES
 	POLY,
 	LGHT,
 	MATR,
+	PLNE,
 	UNKN
 };
 

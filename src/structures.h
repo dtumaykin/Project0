@@ -31,6 +31,7 @@ enum PRIMITIVES
 {
 	SPHERE,
 	POLYGON,
+	PLANE,
 	CONSTRUCTOR
 };
 
@@ -43,6 +44,11 @@ struct poligon_t {
 	point_t ptA, ptB, ptC; // poligon is defined by 3 points
 };
 
+struct plane_t {
+	vector_t n;
+	double d;
+};
+
 struct prim_t {
 	int type; //type from PRIMITIVES
 	int mat; //material id
@@ -50,6 +56,7 @@ struct prim_t {
 	//memory inefficent, but working solution
 	sphere_t sphere;
 	poligon_t poligon;
+	plane_t plane;
 };
 
 //struct light_t {

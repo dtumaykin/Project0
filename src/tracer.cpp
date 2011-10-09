@@ -60,6 +60,10 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 		break;
 
+	case PLANE:
+
+		break;
+
 	case CONSTRUCTOR: //costrutto = cosa brutta e cattiva
 
 		break;
@@ -117,7 +121,6 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 
 	lightRay.src = intrPoint;
 	vector_t normal = getNormal(*p, intrPoint); // normal in intersection point
-	norm(normal);
 
 	for(int i = 0; i < scene.lightCount; i++)
 	{
@@ -178,6 +181,8 @@ vector_t getNormal(prim_t &p, point_t &intrPoint)
 		norm(normal);
 		break;
 	case POLYGON:
+		break;
+	case PLANE:
 		break;
 	case CONSTRUCTOR:
 		break;
