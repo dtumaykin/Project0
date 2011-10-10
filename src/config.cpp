@@ -122,6 +122,9 @@ int loadConfig(char * path, scene_t &scene)
 		case AAMX:
 			ifs >> scene.maxAA;
 			break;
+		case MAXT:
+			ifs >> scene.maxT;
+			break;
 		case UNKN:
 			return line;
 			break;
@@ -166,6 +169,7 @@ int getOpcode(std::ifstream &ifs)
 	if(opcode == "matr") return MATR;
 	if(opcode == "plne") return PLNE;
 	if(opcode == "aamx") return AAMX;
+	if(opcode == "maxt") return MAXT;
 
 	return UNKN;
 }

@@ -80,6 +80,8 @@ struct scene_t {
 
 	int maxAA; // antialias
 
+	double maxT; // max render distance
+
 	//point_t cam; //camera position, now unused
 
 	

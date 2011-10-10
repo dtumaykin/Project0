@@ -15,6 +15,7 @@ enum OPCODES
 	MATR,
 	PLNE,
 	AAMX,
+	MAXT,
 	UNKN
 };
 

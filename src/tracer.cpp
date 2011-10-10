@@ -118,7 +118,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	color_t c = { 0.0f, 0.0f, 0.0f };
 	prim_t *p = NULL;
 	material_t *m = NULL;
-	double t = 5000.0f;
+	double t = scene.maxT;
 	double temp;
 
 	if(depth > 3) return c; //if we reach max depth of recursion
