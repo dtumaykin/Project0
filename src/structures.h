@@ -78,6 +78,8 @@ struct scene_t {
 	double screenSizeX;
 	double screenSizeY;
 
+	int maxAA; // antialias
+
 	//point_t cam; //camera position, now unused
 
 	

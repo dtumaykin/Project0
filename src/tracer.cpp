@@ -95,8 +95,8 @@ color_t getColor(int x, int y, scene_t &scene)
 	double pixelSizeX = scene.screenSizeX/scene.screenResX;
 	double pixelSizeY = scene.screenSizeY/scene.screenResY;
 
-	double AAShiftX = pixelSizeX/ANTIALIAS_MAX;
-	double AAShiftY = pixelSizeY/ANTIALIAS_MAX;
+	double AAShiftX = pixelSizeX/scene.maxAA;
+	double AAShiftY = pixelSizeY/scene.maxAA;
 
 	for(double i = pixelSizeX * x; i < pixelSizeX * (x + 1); i += AAShiftX)
 		for(double j = pixelSizeY * y; j < pixelSizeY * (y + 1); j += AAShiftY)
@@ -107,7 +107,7 @@ color_t getColor(int x, int y, scene_t &scene)
 			cAcc += trace(ray, scene, 0);
 		}
 
-	cAcc /= ANTIALIAS_MAX*ANTIALIAS_MAX;
+	cAcc /= scene.maxAA*scene.maxAA;
 
 	return cAcc;
 }

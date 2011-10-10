@@ -14,6 +14,7 @@ enum OPCODES
 	LGHT,
 	MATR,
 	PLNE,
+	AAMX,
 	UNKN
 };
 
