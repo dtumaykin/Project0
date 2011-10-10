@@ -135,7 +135,12 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	bool inShadow;
 
 	lightRay.src = intrPoint;
-	vector_t normal = getNormal(*p, intrPoint); // normal in intersection point
+	
+	vector_t normal = getNormal(*p, intrPoint); // normalized normal in intersection point
+
+	temp = -1.0f;
+	if(ray.dst * normal > 0.0f)
+		normal = normal * temp;
 
 	for(int i = 0; i < scene.lightCount; i++)
 	{
@@ -199,10 +204,10 @@ vector_t getNormal(prim_t &p, point_t &intrPoint)
 		break;
 	case PLANE:
 		normal = p.plane.n; // already normalized
-		//temporary fix
-		normal.x = - normal.x; 
-		normal.y = - normal.y;
-		normal.z = - normal.z;
+		// particularity of our implementation
+		//normal.x = - normal.x; 
+		//normal.y = - normal.y;
+		//normal.z = - normal.z;
 		break;
 	case CONSTRUCTOR:
 		break;
