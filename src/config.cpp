@@ -9,7 +9,7 @@
 #include "util.h"
 
 
-scene_t config()
+/*scene_t config()
 {
 	FILE *src;
 	scene_t temp;
@@ -48,7 +48,7 @@ scene_t config()
 		temp.prim=vet;
 	}  
 	return temp;      
-}
+}*/
 
 int loadConfig(char * path, scene_t &scene)
 {

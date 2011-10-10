@@ -21,7 +21,7 @@ int loadConfig(char * path, scene_t &scene); // return line number in case of ba
 
 int getOpcode(std::ifstream &ifs);
 
-scene_t config(); // loads default "config.cfg" file and returns a scene, implemented by secco92
+//scene_t config(); // loads default "config.cfg" file and returns a scene, implemented by secco92
 
 
 #endif
