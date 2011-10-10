@@ -90,17 +90,26 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 color_t getColor(int x, int y, scene_t &scene)
 {
-	color_t c = { 0.0f, 0.0f, 0.0f};
+	color_t cAcc = { 0.0f, 0.0f, 0.0f};
 
 	double pixelSizeX = scene.screenSizeX/scene.screenResX;
 	double pixelSizeY = scene.screenSizeY/scene.screenResY;
 
-	ray_t ray = { {x * pixelSizeX, y * pixelSizeY, -1000.0f}, {0.0f, 0.0f, 1.0f}};
-	norm(ray.dst);
+	double AAShiftX = pixelSizeX/ANTIALIAS_MAX;
+	double AAShiftY = pixelSizeY/ANTIALIAS_MAX;
 
-	c = trace(ray, scene, 0);
+	for(double i = pixelSizeX * x; i < pixelSizeX * (x + 1); i += AAShiftX)
+		for(double j = pixelSizeY * y; j < pixelSizeY * (y + 1); j += AAShiftY)
+		{
+			ray_t ray = { {i, j, -1000.0f}, {0.0f, 0.0f, 1.0f}};
+			norm(ray.dst);
 
-	return c;
+			cAcc += trace(ray, scene, 0);
+		}
+
+	cAcc /= ANTIALIAS_MAX*ANTIALIAS_MAX;
+
+	return cAcc;
 }
 
 color_t trace(ray_t &ray, scene_t &scene, int depth)

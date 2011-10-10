@@ -44,6 +44,14 @@ inline color_t& operator+= (color_t &s, color_t &d)
 	return s;
 }
 
+inline color_t& operator/= (color_t &s, const int &d)
+{
+	s.r /= d;
+	s.g /= d;
+	s.b /= d;
+	return s;
+}
+
 inline color_t operator* (color_t &c, double &i)
 {
 	color_t cl = { c.r * i, c.g * i, c.b * i };

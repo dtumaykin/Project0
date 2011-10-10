@@ -1,6 +1,8 @@
 #ifndef P0_TRACER_H
 #define P0_TRACER_H
 
+#define ANTIALIAS_MAX 2
+
 #include "structures.h"
 
 bool getIntersection(prim_t &p, ray_t &r, double &t);
