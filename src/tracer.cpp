@@ -68,8 +68,8 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 	case POLYGON: //poligono
 
 		//triangle vectors
-		u=p.polygon.ptB-p.polygon.ptB;
-		v=p.polygon.ptC-p.polygon.ptA;
+		u = p.polygon.ptB-p.polygon.ptA;
+		v = p.polygon.ptC-p.polygon.ptA;
 
 		//plane normal
 		n=cross(u,v);
@@ -78,12 +78,14 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		n = correctDir(n, r.dst); // normal pointing in right directions
 
 		w0 = r.src - p.polygon.ptA;
+		norm(w0);
 		if(n * r.dst == 0.0f) return false; // ray parallel to plane
 		plT = (n * w0 * -1.0f)/(n * r.dst); // distance to intersection
 		if(plT < 0.0 || plT > t) return false;
 
 		intrPoint = r.src + r.dst * plT; // intersection point
 		w = intrPoint - p.polygon.ptA;
+		norm(w);
 		tD = (u*v)*(u*v)-(u*u)*(v*v);
 
 		tS=((u*v)*(w*v)-(v*v)*(w*u))/tD;
@@ -236,7 +238,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 
 vector_t getNormal(prim_t &p, point_t &intrPoint)
 {
-	vector_t normal;
+	vector_t normal, u, v;
 	switch(p.type)
 	{
 	case SPHERE:
@@ -244,6 +246,13 @@ vector_t getNormal(prim_t &p, point_t &intrPoint)
 		norm(normal);
 		break;
 	case POLYGON:
+		//triangle vectors
+		u=p.polygon.ptB-p.polygon.ptA;
+		v=p.polygon.ptC-p.polygon.ptA;
+
+		//plane normal
+		normal=cross(u,v);
+		norm(normal); // normalize normal
 		break;
 	case PLANE:
 		normal = p.plane.n; // already normalized
