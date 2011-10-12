@@ -3,6 +3,7 @@
 #include "tracer.h"
 
 #include <cmath>
+#include <math.h>
 
 bool getIntersection(prim_t &p, ray_t &r, double &t)
 {
@@ -13,6 +14,11 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 	//plane intersection
 	double pN, pD, pT;
+
+	//polygon intersection
+	vector_t u, v, n, w0, w;
+	double plT, tS, tT, tD;
+	point_t intrPoint;
 
 	//algoritm depends on primitive type
 	switch(p.type)
@@ -60,6 +66,33 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		break;
 
 	case POLYGON: //poligono
+
+		//triangle vectors
+		u=p.polygon.ptB-p.polygon.ptB;
+		v=p.polygon.ptC-p.polygon.ptA;
+
+		//plane normal
+		n=cross(u,v);
+		if(!length(n)) return false;
+		norm(n); // normalize normal
+		n = correctDir(n, r.dst); // normal pointing in right directions
+
+		w0 = r.src - p.polygon.ptA;
+		if(n * r.dst == 0.0f) return false; // ray parallel to plane
+		plT = (n * w0 * -1.0f)/(n * r.dst); // distance to intersection
+		if(plT < 0.0 || plT > t) return false;
+
+		intrPoint = r.src + r.dst * plT; // intersection point
+		w = intrPoint - p.polygon.ptA;
+		tD = (u*v)*(u*v)-(u*u)*(v*v);
+
+		tS=((u*v)*(w*v)-(v*v)*(w*u))/tD;
+		if(tS < 0.0f || tS > 1.0f) return false;
+		tT=((u*v)*(w*u)-(u*u)*(w*v))/tD;
+		if(tT < 0.0f || (tS+tT) > 1.0f) return false;
+
+		t = plT; // new closest intersection
+		return true;
 
 		break;
 
@@ -147,9 +180,10 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	
 	vector_t normal = getNormal(*p, intrPoint); // normalized normal in intersection point
 
-	temp = -1.0f;
-	if(ray.dst * normal > 0.0f)
-		normal = normal * temp;
+	//temp = -1.0f;
+	//if(ray.dst * normal > 0.0f)
+		//normal = normal * temp;
+	normal = correctDir(normal, ray.dst);
 
 	for(int i = 0; i < scene.lightCount; i++)
 	{
@@ -221,5 +255,14 @@ vector_t getNormal(prim_t &p, point_t &intrPoint)
 	case CONSTRUCTOR:
 		break;
 	}
+	return normal;
+}
+
+vector_t correctDir(vector_t &normal, vector_t &dir)
+{
+	double temp = -1.0f;
+	if(normal * dir > 0.0f)
+		normal = normal * temp;
+
 	return normal;
 }
