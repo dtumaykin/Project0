@@ -22,7 +22,7 @@
 		temp.primCount=0;
 		while(fscanf(src,"%s",str)!=EOF)
 		{
-			if(strcmp(str,"sphere")==0 || strcmp(str,"poligon")==0) ctr++;
+			if(strcmp(str,"sphere")==0 || strcmp(str,"polygon")==0) ctr++;
 		}
 		//cout << ctr;
 		//getchar();
@@ -88,9 +88,9 @@ int loadConfig(char * path, scene_t &scene)
 		case POLY:
 			prim_t p;
 			p.type = POLYGON;
-			ifs >> p.poligon.ptA.x >> p.poligon.ptA.y >> p.poligon.ptA.z;
-			ifs >> p.poligon.ptB.x >> p.poligon.ptB.y >> p.poligon.ptB.z;
-			ifs >> p.poligon.ptC.x >> p.poligon.ptC.y >> p.poligon.ptC.z;
+			ifs >> p.polygon.ptA.x >> p.polygon.ptA.y >> p.polygon.ptA.z;
+			ifs >> p.polygon.ptB.x >> p.polygon.ptB.y >> p.polygon.ptB.z;
+			ifs >> p.polygon.ptC.x >> p.polygon.ptC.y >> p.polygon.ptC.z;
 			ifs >> p.mat;
 			tempPrim.push_back(p);
 			break;

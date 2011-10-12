@@ -40,8 +40,8 @@ struct sphere_t {
 	double r;
 };
 
-struct poligon_t {
-	point_t ptA, ptB, ptC; // poligon is defined by 3 points
+struct polygon_t {
+	point_t ptA, ptB, ptC; // polygon is defined by 3 points
 };
 
 struct plane_t {
@@ -55,7 +55,7 @@ struct prim_t {
 
 	//memory inefficent, but working solution
 	sphere_t sphere;
-	poligon_t poligon;
+	polygon_t polygon;
 	plane_t plane;
 };
 
