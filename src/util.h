@@ -76,4 +76,15 @@ inline vector_t &norm(vector_t &vect)
 	return vect;
 }
 
+inline vector_t cross(vector_t &v1,vector_t &v2)
+{
+	vector_t t;
+
+	t.x=v1.x*v2.x;
+	t.y=v1.y*v2.y;
+	t.z=v1.z*v2.z;
+
+	return t;
+}
+
 #endif
