@@ -17,6 +17,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 	//polygon intersection
 	vector_t u, v, n, w0, w;
+	prim_t pl;
 	double plT, tS, tT, tD;
 	point_t intrPoint;
 
@@ -77,11 +78,19 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		norm(n); // normalize normal
 		n = correctDir(n, r.dst); // normal pointing in right directions
 
-		w0 = r.src - p.polygon.ptA;
+		//plane intersection
+		plT = 6000.0f;
+		pl.type = PLANE;
+		pl.plane.n = n;
+		pl.plane.d = n * p.polygon.ptA * -1.0f;
+		if(!getIntersection(pl, r, plT)) return false;
+
+
+		/*w0 = r.src - p.polygon.ptA;
 		norm(w0);
 		if(n * r.dst == 0.0f) return false; // ray parallel to plane
 		plT = (n * w0 * -1.0f)/(n * r.dst); // distance to intersection
-		if(plT < 0.0 || plT > t) return false;
+		if(plT < 0.0 || plT > t) return false;*/
 
 		intrPoint = r.src + r.dst * plT; // intersection point
 		w = intrPoint - p.polygon.ptA;
