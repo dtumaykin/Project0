@@ -95,6 +95,8 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		*/
 
 		intrPoint = r.src + r.dst * plT; // intersection point
+		
+		/* old intersection
 		w = intrPoint - p.polygon.ptA;
 		//norm(w); incorrect
 		tD = (u*v)*(u*v)-(u*u)*(v*v);
@@ -106,6 +108,38 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 		t = plT; // new closest intersection
 		return true;
+		*/
+
+		//new method, credits to standord
+		double u0, u1, u2, v0, v1, v2, aA, aB;
+
+		u0 = intrPoint.y - p.polygon.ptA.y;
+		v0 = intrPoint.z - p.polygon.ptA.z;
+		u1 = p.polygon.ptB.y - p.polygon.ptA.y;
+		u2 = p.polygon.ptC.y - p.polygon.ptA.y;
+		v1 = p.polygon.ptB.z - p.polygon.ptA.z;
+		v2 = p.polygon.ptC.z - p.polygon.ptA.z;
+
+		if(!u1)
+		{
+			aB = u0/u1;
+			if(aB >= 0 && aB <= 1)
+				aA = (v0 - aB*v2)/v1;
+		}
+		else
+		{
+			aB = (v0*u1 - u0*v1)/(v2*u1 - u2*v1);
+			if(aB >= 0 && aB <= 1)
+				aA = (u0 - aB*u2)/u1;
+		}
+
+		if(aA >= 0 && aB >= 0 && (aA+aB) <= 1)
+		{
+			t = plT;
+			return true;
+		}
+		return false;
+	
 
 		break;
 
