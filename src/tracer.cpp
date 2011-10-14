@@ -16,9 +16,9 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 	double pN, pD, pT;
 
 	//polygon intersection
-	vector_t u, v, n, w0, w;
+	vector_t u, v, n;//, w0, w;
 	prim_t pl;
-	double plT, tS, tT, tD;
+	double plT;//, tS, tT, tD;
 	point_t intrPoint;
 
 	//algoritm depends on primitive type
