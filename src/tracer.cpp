@@ -7,25 +7,16 @@
 
 bool getIntersection(prim_t &p, ray_t &r, double &t)
 {
-	//sphere intersection
-	point_t PoPc;
-	double B, D, x1, x2;
-	bool rval = false;
-
-	//plane intersection
-	double pN, pD, pT;
-
-	//polygon intersection
-	vector_t u, v, n;//, w0, w;
-	prim_t pl;
-	double plT;//, tS, tT, tD;
-	point_t intrPoint;
-
 	//algoritm depends on primitive type
 	switch(p.type)
 	{
 
 	case SPHERE: //sfera
+
+		point_t PoPc;
+		double B, D, x1, x2;
+		bool rval;
+		rval = false;
 
 		PoPc = r.src - p.sphere.center;
 		B = r.dst * PoPc; 
@@ -47,26 +38,32 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 			rval = true;
 		}
 		return rval;
+
 		/*if(x1 < x2)
 		{
-			if(t > x1) 
-			{
-				t = x1;     
-				return 1;
-			}
+		if(t > x1) 
+		{
+		t = x1;     
+		return 1;
+		}
 		}
 		else
 		{
-			if(t > x1)
-			{
-				t = x2;
-				return 1;
-			}
+		if(t > x1)
+		{
+		t = x2;
+		return 1;
+		}
 		}*/
-		
+
 		break;
 
 	case POLYGON: //poligono
+
+		vector_t u, v, n;//, w0, w;
+		prim_t pl;
+		double plT;//, tS, tT, tD;
+		point_t intrPoint;
 
 		//triangle vectors
 		u = p.polygon.ptB-p.polygon.ptA;
@@ -85,7 +82,6 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		pl.plane.d = n * p.polygon.ptA * -1.0f;
 		if(!getIntersection(pl, r, plT)) return false;
 
-
 		/* old intersection
 		w0 = r.src - p.polygon.ptA;
 		norm(w0);
@@ -95,7 +91,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		*/
 
 		intrPoint = r.src + r.dst * plT; // intersection point
-		
+
 		/* old intersection
 		w = intrPoint - p.polygon.ptA;
 		//norm(w); incorrect
@@ -110,7 +106,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		return true;
 		*/
 
-		//new method, credits to standord
+		//new method, credits to stanford
 		double u0, u1, u2, v0, v1, v2, aA, aB;
 
 		u0 = intrPoint.y - p.polygon.ptA.y;
@@ -139,11 +135,13 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 			return true;
 		}
 		return false;
-	
+
 
 		break;
 
 	case PLANE:
+
+		double pN, pD, pT;
 
 		pN = -1.0f *(p.plane.d + p.plane.n * r.src); // d + N * Po
 		pD = r.dst * p.plane.n; // vD * N
@@ -153,7 +151,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		pT = pN / pD;
 
 		if(pT <= 0.0f || pT > t) return 0; // if behind or there's another intersection before
-		
+
 		t = pT - 0.0001f; // fix for precision problems
 		return true;
 
@@ -187,9 +185,9 @@ color_t getColor(int x, int y, scene_t &scene)
 			cAcc += trace(ray, scene, 0);
 		}
 
-	cAcc /= scene.maxAA*scene.maxAA;
+		cAcc /= scene.maxAA*scene.maxAA;
 
-	return cAcc;
+		return cAcc;
 }
 
 color_t trace(ray_t &ray, scene_t &scene, int depth)
@@ -207,7 +205,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	for(int i = 0; i < scene.primCount; i++)
 		if(getIntersection(scene.prim[i], ray, t))
 			p = &scene.prim[i];
-			
+
 	if(!p) return background; // no intersections
 
 	//find material for primitive
@@ -217,29 +215,29 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 
 	if(!m) return background; // non existant material
 
-	
+
 	//calculating shadows/lighting
 	vector_t intrPoint = ray.src + ray.dst * t;
 	ray_t lightRay;
 	bool inShadow;
 
 	lightRay.src = intrPoint;
-	
+
 	vector_t normal = getNormal(*p, intrPoint); // normalized normal in intersection point
 
 	//temp = -1.0f;
 	//if(ray.dst * normal > 0.0f)
-		//normal = normal * temp;
+	//normal = normal * temp;
 	normal = correctDir(normal, ray.dst);
 
 	for(int i = 0; i < scene.lightCount; i++)
 	{
 		inShadow = false;
 		lightRay.dst = scene.light[i] - intrPoint;
-		
+
 		if(normal * lightRay.dst <= 0.0f) continue; // pointing in opposite directions
 		temp = sqrt(lightRay.dst*lightRay.dst);
-		
+
 		norm(lightRay.dst);
 
 		for(int j = 0; j < scene.primCount; j++)
@@ -249,24 +247,24 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 				break;
 			}
 
-		if(!inShadow)
-		{
-			//lambert
-			double lambert = (lightRay.dst * normal);
-			//c.r += m->col.r * m->coefDiffuse;// * lambert;
-			//c.g += m->col.g * m->coefDiffuse;// * lambert;
-			//c.b += m->col.b * m->coefDiffuse;// * lambert;
-			c += m->col * m->coefDiffuse * lambert;
+			if(!inShadow)
+			{
+				//lambert
+				double lambert = (lightRay.dst * normal);
+				//c.r += m->col.r * m->coefDiffuse;// * lambert;
+				//c.g += m->col.g * m->coefDiffuse;// * lambert;
+				//c.b += m->col.b * m->coefDiffuse;// * lambert;
+				c += m->col * m->coefDiffuse * lambert;
 
-			//blinn
-			vector_t blinnDst = lightRay.dst - ray.dst;
-			norm(blinnDst);
+				//blinn
+				vector_t blinnDst = lightRay.dst - ray.dst;
+				norm(blinnDst);
 
-			double blinn = blinnDst * normal;
-			blinn = m->coefReflect * pow(blinn, (double)100.0f);
+				double blinn = blinnDst * normal;
+				blinn = m->coefReflect * pow(blinn, (double)100.0f);
 
-			c += m->col * blinn;
-		}
+				c += m->col * blinn;
+			}
 	}
 
 	//calculating reflections
@@ -277,6 +275,9 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	reflRay.dst = ray.dst - normal * refl;
 
 	c += trace(reflRay, scene, depth + 1) * m->coefReflect;
+
+	//calculation refractions
+	ray_t refrRay;
 
 	return c;
 }
