@@ -65,12 +65,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\3ds_parser.cpp" />
     <ClCompile Include="..\src\config.cpp" />
     <ClCompile Include="..\src\easybmp\EasyBMP.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\tracer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\3ds_parser.h" />
     <ClInclude Include="..\src\config.h" />
     <ClInclude Include="..\src\easybmp\EasyBMP.h" />
     <ClInclude Include="..\src\easybmp\EasyBMP_BMP.h" />
