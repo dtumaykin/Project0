@@ -278,6 +278,19 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 
 	//calculation refractions
 	ray_t refrRay;
+	double n = 1.0f/1.33f; //"insert a comment here"
+	double refr = 1.0f - ((ray.dst * normal) * (ray.dst * normal));
+
+	refrRay.src = intrPoint;
+	double sinT2 = n * n * refr;
+	
+	if(sinT2 <= 1.0f)
+	{
+		refrRay.dst =(ray.dst - (normal / 1.0f/(n + sqrt(1.0f - sinT2)))) / 1.0f/n;  //this need operator * between vector_t and double...
+		c += trace(refrRay, scene, depth + 1) * m->coefRefract;
+	}
+	
+	//end
 
 	return c;
 }
