@@ -81,6 +81,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		pl.plane.n = n;
 		pl.plane.d = n * p.polygon.ptA * -1.0f;
 		if(!getIntersection(pl, r, plT)) return false;
+		if(plT >= t) return false;
 
 		/* old intersection
 		w0 = r.src - p.polygon.ptA;
@@ -179,10 +180,10 @@ color_t getColor(int x, int y, scene_t &scene)
 	for(double i = pixelSizeX * x; i < pixelSizeX * (x + 1); i += AAShiftX)
 		for(double j = pixelSizeY * y; j < pixelSizeY * (y + 1); j += AAShiftY)
 		{
-			ray_t ray = { {i, j, -1000.0f}, {0.0f, 0.0f, 1.0f}};
+			ray_t ray = { {i, j, -1000.0f}, {0.0f, 0.0f, 100000.0f}};
 			norm(ray.dst);
 
-			cAcc += trace(ray, scene, 0);
+			cAcc += trace(ray, scene, 0, 1.0f);
 		}
 
 		cAcc /= scene.maxAA*scene.maxAA;
@@ -190,7 +191,7 @@ color_t getColor(int x, int y, scene_t &scene)
 		return cAcc;
 }
 
-color_t trace(ray_t &ray, scene_t &scene, int depth)
+color_t trace(ray_t &ray, scene_t &scene, int depth, double currRefr)
 {
 	color_t background = { 0.15f, 0.15f, 0.15f};
 	color_t c = { 0.0f, 0.0f, 0.0f };
@@ -274,11 +275,26 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 	reflRay.src = intrPoint;
 	reflRay.dst = ray.dst - normal * refl;
 
-	c += trace(reflRay, scene, depth + 1) * m->coefReflect;
+	c += trace(reflRay, scene, depth + 1, currRefr) * m->coefReflect;
 
 	//calculation refractions
 	ray_t refrRay;
+
 	double n = 1.0f/1.33f; //"insert a comment here"
+
+	//stampella
+	if(currRefr == 1.0f)
+	{
+		currRefr = 1.33f;
+		n = 1.0f/1.33f;
+	}
+	else
+	{
+		currRefr = 1.0f;
+		n = 1.33f/1.0f;
+	}
+
+
 	double refr = 1.0f - ((ray.dst * normal) * (ray.dst * normal));
 
 	refrRay.src = intrPoint;
@@ -290,7 +306,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 		//refrRay.dst =(ray.dst - (normal / 1.0f/(n + sqrt(1.0f - sinT2)))) / 1.0f/n;  //this need operator * between vector_t and double...
 		tmp = n + sqrt(1.0f - sinT2);
 		refrRay.dst = ray.dst * n - normal * tmp; 
-		c += trace(refrRay, scene, depth + 1) * m->coefRefract;
+		c += trace(refrRay, scene, depth + 1, currRefr) * m->coefRefract;
 	}
 	
 	//end
