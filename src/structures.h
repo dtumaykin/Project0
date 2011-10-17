@@ -82,7 +82,7 @@ struct scene_t {
 
 	double maxT; // max render distance
 
-	//point_t cam; //camera position, now unused
+	point_t cam; //camera position, now unused
 
 	
 	//scene content

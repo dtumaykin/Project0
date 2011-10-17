@@ -180,7 +180,10 @@ color_t getColor(int x, int y, scene_t &scene)
 	for(double i = pixelSizeX * x; i < pixelSizeX * (x + 1); i += AAShiftX)
 		for(double j = pixelSizeY * y; j < pixelSizeY * (y + 1); j += AAShiftY)
 		{
-			ray_t ray = { {i, j, -1000.0f}, {0.0f, 0.0f, 100000.0f}};
+			point_t pixelPos = { i, j, 0.0f};
+			vector_t dst = pixelPos - scene.cam;
+			ray_t ray = { scene.cam, dst};
+			//ray_t ray = {{ i, j, 0}, {i, j, 0.0f}};
 			norm(ray.dst);
 
 			cAcc += trace(ray, scene, 0, 1.0f);

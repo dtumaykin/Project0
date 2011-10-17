@@ -122,6 +122,9 @@ int loadConfig(char * path, scene_t &scene)
 		case AAMX:
 			ifs >> scene.maxAA;
 			break;
+		case CPOS:
+			ifs >> scene.cam.x >> scene.cam.y >> scene.cam.z;
+			break;
 		case MAXT:
 			ifs >> scene.maxT;
 			break;
@@ -170,6 +173,7 @@ int getOpcode(std::ifstream &ifs)
 	if(opcode == "plne") return PLNE;
 	if(opcode == "aamx") return AAMX;
 	if(opcode == "maxt") return MAXT;
+	if(opcode == "cpos") return CPOS;
 
 	return UNKN;
 }

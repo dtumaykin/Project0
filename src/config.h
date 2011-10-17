@@ -16,6 +16,7 @@ enum OPCODES
 	PLNE,
 	AAMX,
 	MAXT,
+	CPOS,
 	UNKN
 };
 
