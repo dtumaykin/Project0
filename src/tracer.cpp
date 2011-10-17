@@ -283,7 +283,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth, double currRefr)
 	//calculation refractions
 	ray_t refrRay;
 
-	double n = 1.0f/1.33f; //"insert a comment here"
+	double n;// = 1.0f/1.33f; //"insert a comment here"
 
 	//stampella
 	if(currRefr == 1.0f)
