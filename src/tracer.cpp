@@ -283,10 +283,13 @@ color_t trace(ray_t &ray, scene_t &scene, int depth)
 
 	refrRay.src = intrPoint;
 	double sinT2 = n * n * refr;
+	double tmp;
 	
 	if(sinT2 <= 1.0f)
 	{
-		refrRay.dst =(ray.dst - (normal / 1.0f/(n + sqrt(1.0f - sinT2)))) / 1.0f/n;  //this need operator * between vector_t and double...
+		//refrRay.dst =(ray.dst - (normal / 1.0f/(n + sqrt(1.0f - sinT2)))) / 1.0f/n;  //this need operator * between vector_t and double...
+		tmp = n + sqrt(1.0f - sinT2);
+		refrRay.dst = ray.dst * n - normal * tmp; 
 		c += trace(refrRay, scene, depth + 1) * m->coefRefract;
 	}
 	
