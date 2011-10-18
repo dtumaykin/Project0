@@ -107,15 +107,60 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		return true;
 		*/
 
+		
 		//new method, credits to stanford
 		double u0, u1, u2, v0, v1, v2, aA, aB;
 
-		u0 = intrPoint.y - p.polygon.ptA.y;
-		v0 = intrPoint.z - p.polygon.ptA.z;
-		u1 = p.polygon.ptB.y - p.polygon.ptA.y;
-		u2 = p.polygon.ptC.y - p.polygon.ptA.y;
-		v1 = p.polygon.ptB.z - p.polygon.ptA.z;
-		v2 = p.polygon.ptC.z - p.polygon.ptA.z;
+		/*
+		//stampellen monstruosen in corsen
+		//we need to play a bit with indexes
+		int i0, i1, i2;
+		if(n.x > n.y && n.x > n.z)
+				i0 = 0;
+		if(n.y > n.x && n.y > n.z)
+				i0 = 1;
+		if(n.z > n.x && n.z > n.y)
+				i0 = 2;
+
+		if(i0 == 0) {
+			i1 = 1; i2 = 2;
+		}
+		if(i0 == 1) {
+			i1 = 0; i2 = 2;
+		}
+		if(i0 == 2) {
+			i1 = 0; i2 = 1;
+		}
+
+
+		double poly[3][3];
+		poly[0][0] = p.polygon.ptA.x;
+		poly[0][1] = p.polygon.ptA.y;
+		poly[0][2] = p.polygon.ptA.z;
+
+		poly[1][0] = p.polygon.ptB.x;
+		poly[1][1] = p.polygon.ptB.y;
+		poly[1][2] = p.polygon.ptB.z;
+
+		poly[2][0] = p.polygon.ptC.x;
+		poly[2][1] = p.polygon.ptC.y;
+		poly[2][2] = p.polygon.ptC.z;
+
+		double pt[3];
+		pt[0] = intrPoint.x;
+		pt[1] = intrPoint.y;
+		pt[2] = intrPoint.z;
+		*/
+		//end of stampellen
+
+		u0 = intrPoint.y - p.polygon.ptA.y;//pt[i1] - poly[0][i1];		//
+		v0 = intrPoint.z - p.polygon.ptA.z;//pt[i2] - poly[0][i2];		//
+		u1 = p.polygon.ptB.y - p.polygon.ptA.y;//poly[1][i1] - poly[0][i1];	//
+		u2 = p.polygon.ptC.y - p.polygon.ptA.y;//poly[2][i1] - poly[0][i1];	//
+		v1 = p.polygon.ptB.z - p.polygon.ptA.z;//poly[1][i2] - poly[0][i2];	//
+		v2 = p.polygon.ptC.z - p.polygon.ptA.z;//poly[2][i2] - poly[0][i2];	//
+
+
 
 		if(!u1)
 		{
@@ -136,7 +181,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 			return true;
 		}
 		return false;
-
+		
 
 		break;
 
