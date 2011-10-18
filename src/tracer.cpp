@@ -294,13 +294,13 @@ color_t trace(ray_t &ray, scene_t &scene, int depth, double currRefr)
 	//stampella - rifrazione nel vetro
 	if(currRefr == 1.0f)
 	{
-		currRefr = 1.5f;
-		n = 1.0f/1.5f;
+		currRefr = m->refrIndex;
+		n = 1.0f/currRefr;
 	}
 	else
 	{
-		currRefr = 1.0f;
-		n = 1.5f/1.0f;
+		currRefr = m->refrIndex;
+		n = currRefr/1.0f;
 	}
 
 	if(m->coefRefract >= 0.01f)

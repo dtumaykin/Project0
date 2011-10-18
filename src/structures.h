@@ -69,6 +69,7 @@ struct material_t {
 	double coefDiffuse;
 	double coefReflect;
 	double coefRefract;
+	double refrIndex;
 };
 
 struct scene_t {

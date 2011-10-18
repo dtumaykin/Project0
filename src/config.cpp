@@ -108,6 +108,7 @@ int loadConfig(char * path, scene_t &scene)
 			ifs >> m.coefDiffuse;
 			ifs >> m.coefReflect;
 			ifs >> m.coefRefract;
+			ifs >> m.refrIndex;
 			tempMat.push_back(m);
 			break;
 		case PLNE:
