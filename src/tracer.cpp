@@ -107,7 +107,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		return true;
 		*/
 
-		
+		/*
 		//new method, credits to stanford
 		double u0, u1, u2, v0, v1, v2, aA, aB;
 
@@ -115,11 +115,11 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		//stampellen monstruosen in corsen
 		//we need to play a bit with indexes
 		int i0, i1, i2;
-		if(n.x > n.y && n.x > n.z)
+		if(n.x >= n.y && n.x >= n.z)
 				i0 = 0;
-		if(n.y > n.x && n.y > n.z)
+		if(n.y >= n.x && n.y >= n.z)
 				i0 = 1;
-		if(n.z > n.x && n.z > n.y)
+		if(n.z >= n.x && n.z >= n.y)
 				i0 = 2;
 
 		if(i0 == 0) {
@@ -150,16 +150,25 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		pt[0] = intrPoint.x;
 		pt[1] = intrPoint.y;
 		pt[2] = intrPoint.z;
+
+		u0 = pt[i1] - poly[0][i1];		//
+		v0 = pt[i2] - poly[0][i2];		//
+		u1 = poly[1][i1] - poly[0][i1];	//
+		u2 = poly[2][i1] - poly[0][i1];	//
+		v1 = poly[1][i2] - poly[0][i2];	//
+		v2 = poly[2][i2] - poly[0][i2];	//
+
 		*/
 		//end of stampellen
-
+		
+		/*
 		u0 = intrPoint.y - p.polygon.ptA.y;//pt[i1] - poly[0][i1];		//
 		v0 = intrPoint.z - p.polygon.ptA.z;//pt[i2] - poly[0][i2];		//
 		u1 = p.polygon.ptB.y - p.polygon.ptA.y;//poly[1][i1] - poly[0][i1];	//
 		u2 = p.polygon.ptC.y - p.polygon.ptA.y;//poly[2][i1] - poly[0][i1];	//
 		v1 = p.polygon.ptB.z - p.polygon.ptA.z;//poly[1][i2] - poly[0][i2];	//
 		v2 = p.polygon.ptC.z - p.polygon.ptA.z;//poly[2][i2] - poly[0][i2];	//
-
+		
 
 
 		if(!u1)
@@ -181,7 +190,30 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 			return true;
 		}
 		return false;
-		
+		*/
+
+		// Steve Marschner method, slower but working
+		// http://www.cs.cornell.edu/courses/cs465/2003fa/homeworks/raytri.pdf
+		vector_t p1p0, p2p1, p0p2, xp0, xp1, xp2, c0, c1, c2;
+
+		p1p0 = p.polygon.ptB - p.polygon.ptA;
+		p2p1 = p.polygon.ptC - p.polygon.ptB;
+		p0p2 = p.polygon.ptA - p.polygon.ptC;
+
+		xp0 = intrPoint - p.polygon.ptA;
+		xp1 = intrPoint - p.polygon.ptB;
+		xp2 = intrPoint - p.polygon.ptC;
+
+		c0 = cross(p1p0, xp0);
+		c1 = cross(p2p1, xp1);
+		c2 = cross(p0p2, xp2);
+
+		if(c0 * n <= 0 && c1 * n <= 0 && c2 * n <= 0)
+		{
+			t = plT;
+			return true;
+		}
+
 
 		break;
 
