@@ -273,31 +273,51 @@ color_t trace(ray_t &ray, scene_t &scene, int depth, double currRefr)
 
 	//calculating reflections
 	ray_t reflRay;
-	double refl = ray.dst * normal * 2.0f;
 
-	reflRay.src = intrPoint;
-	reflRay.dst = ray.dst - normal * refl;
+	double cos1 = - (ray.dst * normal);
+	if(m->coefReflect >= 0.01f)
+	{
+		double refl = cos1 * 2.0f;
 
-	c += trace(reflRay, scene, depth + 1, currRefr) * m->coefReflect;
+		reflRay.src = intrPoint;
+		reflRay.dst = ray.dst + normal * refl;
+		// norm(reflRay.dst); no need
+
+		c += trace(reflRay, scene, depth + 1, currRefr) * m->coefReflect;
+	}
 
 	//calculation refractions
 	ray_t refrRay;
 
 	double n;// = 1.0f/1.33f; //"insert a comment here"
 
-	//stampella
+	//stampella - rifrazione nel vetro
 	if(currRefr == 1.0f)
 	{
-		currRefr = 1.33f;
-		n = 1.0f/1.33f;
+		currRefr = 1.5f;
+		n = 1.0f/1.5f;
 	}
 	else
 	{
 		currRefr = 1.0f;
-		n = 1.33f/1.0f;
+		n = 1.5f/1.0f;
 	}
 
+	if(m->coefRefract >= 0.01f)
+	{
+		double cos2 = sqrt(1.0f - n*n * (1.0f - cos1*cos1));
+		refrRay.src = intrPoint;
+		double refr;
+		if(cos1 >= 0.0f)
+			refr = n * cos1 - cos2;
+		else
+			refr = -n * cos1 + cos2;
 
+		refrRay.dst = ray.dst * n + normal * refr;
+		c += trace(refrRay, scene, depth + 1, currRefr) * m->coefRefract;
+	}
+
+	/*
 	double refr = 1.0f - ((ray.dst * normal) * (ray.dst * normal));
 
 	refrRay.src = intrPoint;
@@ -310,7 +330,7 @@ color_t trace(ray_t &ray, scene_t &scene, int depth, double currRefr)
 		tmp = n + sqrt(1.0f - sinT2);
 		refrRay.dst = ray.dst * n - normal * tmp; 
 		c += trace(refrRay, scene, depth + 1, currRefr) * m->coefRefract;
-	}
+	}*/
 	
 	//end
 
