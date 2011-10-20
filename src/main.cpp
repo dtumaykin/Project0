@@ -46,7 +46,9 @@ void main()
 	BMP output;
 	output.SetSize(scene.screenResX, scene.screenResY);
 
+	int percentDone, perc = 0;
 	for(int i = 0; i < scene.screenResX; i++)
+	{
 		for(int j = 0; j < scene.screenResY; j++)
 		{
 			color_t r = getColor(i, j, scene);
@@ -69,7 +71,15 @@ void main()
 			output(i, j)->Red	= ebmpBYTE(r.r);
 			output(i, j)->Green = ebmpBYTE(r.g);
 			output(i, j)->Blue	= ebmpBYTE(r.b);
+
 		}
+		percentDone = int(i/(double)scene.screenResX * 100.0f);
+		if(perc != percentDone)
+		{
+			printf("done: %d\n", percentDone);
+			perc = percentDone;
+		}
+	}
 
 	//writing output image
 	output.WriteToFile("output.bmp");
