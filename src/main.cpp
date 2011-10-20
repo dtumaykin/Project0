@@ -1,3 +1,22 @@
+/*
+*	 ______             _                    _____  
+*	(_____ \           (_)              _   (_____) 
+*	 _____) )____ ___   _ _____  ____ _| |_ _  __ _ 
+*	|  ____// ___) _ \ | | ___ |/ ___|_   _) |/ /| |
+*	| |    | |  | |_| || | ____( (___  | |_|   /_| |
+*	|_|    |_|   \___/_| |_____)\____)  \__)\_____/ 
+*					 (__/ 
+*
+*	Project0 - simple C/C++ raytracer
+*	created by Danil Tumaykin, Alessandro Carlin, Marco Cauzzi, Marco Begnozzi
+*
+*	P0 was intended as learning project, so feel free to modify and reuse our code :P
+*	
+*	want to contibute - email me - d.tumaykin@gmail.com
+*
+*/
+
+
 #include <iostream>
 #include <math.h>
 
