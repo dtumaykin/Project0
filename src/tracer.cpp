@@ -192,6 +192,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		return false;
 		*/
 
+		/*
 		// Steve Marschner method, slower but working
 		// http://www.cs.cornell.edu/courses/cs465/2003fa/homeworks/raytri.pdf
 		vector_t p1p0, p2p1, p0p2, xp0, xp1, xp2, c0, c1, c2;
@@ -213,7 +214,43 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 			t = plT;
 			return true;
 		}
+		*/
 
+		//kill me please
+		if (fabs(n.x) >= fabs(n.y) && fabs(n.x) >= fabs(n.z))
+		{
+			if ((n.x*((intrPoint.z-p.polygon.ptA.z)*(p.polygon.ptB.y-p.polygon.ptA.y)-(intrPoint.y-p.polygon.ptA.y)*(p.polygon.ptB.z-p.polygon.ptA.z)) <= 0)
+				&& (n.x*((intrPoint.z-p.polygon.ptB.z)*(p.polygon.ptC.y-p.polygon.ptB.y)-(intrPoint.y-p.polygon.ptB.y)*(p.polygon.ptC.z-p.polygon.ptB.z)) <= 0)
+				&& (n.x*((intrPoint.z-p.polygon.ptC.z)*(p.polygon.ptA.y-p.polygon.ptC.y)-(intrPoint.y-p.polygon.ptC.y)*(p.polygon.ptA.z-p.polygon.ptC.z)) <= 0))
+				t = plT;
+			if ((n.x*((intrPoint.z-p.polygon.ptA.z)*(p.polygon.ptB.y-p.polygon.ptA.y)-(intrPoint.y-p.polygon.ptA.y)*(p.polygon.ptB.z-p.polygon.ptA.z)) >= 0)
+				&& (n.x*((intrPoint.z-p.polygon.ptB.z)*(p.polygon.ptC.y-p.polygon.ptB.y)-(intrPoint.y-p.polygon.ptB.y)*(p.polygon.ptC.z-p.polygon.ptB.z)) >= 0)
+				&& (n.x*((intrPoint.z-p.polygon.ptC.z)*(p.polygon.ptA.y-p.polygon.ptC.y)-(intrPoint.y-p.polygon.ptC.y)*(p.polygon.ptA.z-p.polygon.ptC.z)) >= 0))
+				t = plT;
+		} 
+		else if (fabs(n.y) >= fabs(n.x) && fabs(n.y) >= fabs(n.z))
+		{
+			if ((n.y*((intrPoint.z-p.polygon.ptA.z)*(p.polygon.ptB.x-p.polygon.ptA.x)-(intrPoint.x-p.polygon.ptA.x)*(p.polygon.ptB.z-p.polygon.ptA.z)) <= 0)
+				&& (n.y*((intrPoint.z-p.polygon.ptB.z)*(p.polygon.ptC.x-p.polygon.ptB.x)-(intrPoint.x-p.polygon.ptB.x)*(p.polygon.ptC.z-p.polygon.ptB.z)) <= 0)
+				&& (n.y*((intrPoint.z-p.polygon.ptC.z)*(p.polygon.ptA.x-p.polygon.ptC.x)-(intrPoint.x-p.polygon.ptC.x)*(p.polygon.ptA.z-p.polygon.ptC.z)) <= 0))
+				t = plT;
+			if ((n.y*((intrPoint.z-p.polygon.ptA.z)*(p.polygon.ptB.x-p.polygon.ptA.x)-(intrPoint.x-p.polygon.ptA.x)*(p.polygon.ptB.z-p.polygon.ptA.z)) >= 0)
+				&& (n.y*((intrPoint.z-p.polygon.ptB.z)*(p.polygon.ptC.x-p.polygon.ptB.x)-(intrPoint.x-p.polygon.ptB.x)*(p.polygon.ptC.z-p.polygon.ptB.z)) >= 0)
+				&& (n.y*((intrPoint.z-p.polygon.ptC.z)*(p.polygon.ptA.x-p.polygon.ptC.x)-(intrPoint.x-p.polygon.ptC.x)*(p.polygon.ptA.z-p.polygon.ptC.z)) >= 0))
+				t = plT;
+		}
+		else
+		{
+			if ((n.z*((intrPoint.y-p.polygon.ptA.y)*(p.polygon.ptB.x-p.polygon.ptA.x)-(intrPoint.x-p.polygon.ptA.x)*(p.polygon.ptB.y-p.polygon.ptA.y)) <= 0)
+				&& (n.z*((intrPoint.y-p.polygon.ptB.y)*(p.polygon.ptC.x-p.polygon.ptB.x)-(intrPoint.x-p.polygon.ptB.x)*(p.polygon.ptC.y-p.polygon.ptB.y)) <= 0)
+				&& (n.z*((intrPoint.y-p.polygon.ptC.y)*(p.polygon.ptA.x-p.polygon.ptC.x)-(intrPoint.x-p.polygon.ptC.x)*(p.polygon.ptA.y-p.polygon.ptC.y)) <= 0))
+				t = plT;
+			if ((n.z*((intrPoint.y-p.polygon.ptA.y)*(p.polygon.ptB.x-p.polygon.ptA.x)-(intrPoint.x-p.polygon.ptA.x)*(p.polygon.ptB.y-p.polygon.ptA.y)) >= 0)
+				&& (n.z*((intrPoint.y-p.polygon.ptB.y)*(p.polygon.ptC.x-p.polygon.ptB.x)-(intrPoint.x-p.polygon.ptB.x)*(p.polygon.ptC.y-p.polygon.ptB.y)) >= 0)
+				&& (n.z*((intrPoint.y-p.polygon.ptC.y)*(p.polygon.ptA.x-p.polygon.ptC.x)-(intrPoint.x-p.polygon.ptC.x)*(p.polygon.ptA.y-p.polygon.ptC.y)) >= 0))
+				t = plT;
+		}
+		return true;
 
 		break;
 
