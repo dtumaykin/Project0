@@ -76,7 +76,7 @@ void main()
 		percentDone = int(i/(double)scene.screenResX * 100.0f);
 		if(perc != percentDone)
 		{
-			printf("done: %d\n", percentDone);
+			printf("done: %d%s\n", percentDone, "%");
 			perc = percentDone;
 		}
 	}

@@ -107,7 +107,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		return true;
 		*/
 
-		/*
+		
 		//new method, credits to stanford
 		double u0, u1, u2, v0, v1, v2, aA, aB;
 
@@ -160,16 +160,36 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 
 		*/
 		//end of stampellen
-		
-		/*
-		u0 = intrPoint.y - p.polygon.ptA.y;//pt[i1] - poly[0][i1];		//
-		v0 = intrPoint.z - p.polygon.ptA.z;//pt[i2] - poly[0][i2];		//
-		u1 = p.polygon.ptB.y - p.polygon.ptA.y;//poly[1][i1] - poly[0][i1];	//
-		u2 = p.polygon.ptC.y - p.polygon.ptA.y;//poly[2][i1] - poly[0][i1];	//
-		v1 = p.polygon.ptB.z - p.polygon.ptA.z;//poly[1][i2] - poly[0][i2];	//
-		v2 = p.polygon.ptC.z - p.polygon.ptA.z;//poly[2][i2] - poly[0][i2];	//
-		
 
+
+		//probably works, DO NOT TOUCH
+		if(fabs(n.x) >= fabs(n.y) && fabs(n.x) >= fabs(n.z)) // projecting to yz plane
+		{
+			u0 = intrPoint.y - p.polygon.ptA.y;//pt[i1] - poly[0][i1];		//
+			v0 = intrPoint.z - p.polygon.ptA.z;//pt[i2] - poly[0][i2];		//
+			u1 = p.polygon.ptB.y - p.polygon.ptA.y;//poly[1][i1] - poly[0][i1];	//
+			u2 = p.polygon.ptC.y - p.polygon.ptA.y;//poly[2][i1] - poly[0][i1];	//
+			v1 = p.polygon.ptB.z - p.polygon.ptA.z;//poly[1][i2] - poly[0][i2];	//
+			v2 = p.polygon.ptC.z - p.polygon.ptA.z;//poly[2][i2] - poly[0][i2];	//
+		}
+		else if(fabs(n.y) >= fabs(n.x) && fabs(n.y) >= fabs(n.z)) // projecting to xz plane
+		{
+			u0 = intrPoint.x - p.polygon.ptA.x;
+			v0 = intrPoint.z - p.polygon.ptA.z;
+			u1 = p.polygon.ptB.x - p.polygon.ptA.x;
+			u2 = p.polygon.ptC.x - p.polygon.ptA.x;
+			v1 = p.polygon.ptB.z - p.polygon.ptA.z;
+			v2 = p.polygon.ptC.z - p.polygon.ptA.z;
+		}
+		else // xy plane
+		{
+			u0 = intrPoint.x - p.polygon.ptA.x;
+			v0 = intrPoint.y - p.polygon.ptA.y;
+			u1 = p.polygon.ptB.x - p.polygon.ptA.x;
+			u2 = p.polygon.ptC.x - p.polygon.ptA.x;
+			v1 = p.polygon.ptB.y - p.polygon.ptA.y;
+			v2 = p.polygon.ptC.y - p.polygon.ptA.y;
+		}
 
 		if(!u1)
 		{
@@ -190,7 +210,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 			return true;
 		}
 		return false;
-		*/
+		
 
 		/*
 		// Steve Marschner method, slower but working
@@ -216,6 +236,7 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 		}
 		*/
 
+		/*
 		//kill me please
 		if (fabs(n.x) >= fabs(n.y) && fabs(n.x) >= fabs(n.z))
 		{
@@ -250,7 +271,11 @@ bool getIntersection(prim_t &p, ray_t &r, double &t)
 				&& (n.z*((intrPoint.y-p.polygon.ptC.y)*(p.polygon.ptA.x-p.polygon.ptC.x)-(intrPoint.x-p.polygon.ptC.x)*(p.polygon.ptA.y-p.polygon.ptC.y)) >= 0))
 				t = plT;
 		}
-		return true;
+
+		if(t == plT)
+			return true;
+		return false;
+		*/
 
 		break;
 
