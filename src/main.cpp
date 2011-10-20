@@ -19,6 +19,7 @@
 
 #include <iostream>
 #include <math.h>
+#include <time.h>
 
 #include "structures.h"
 #include "util.h"
@@ -35,6 +36,8 @@ void main()
 	//loading config
 	scene_t scene;
 
+	std::cout<<"Welcome to Project0, a really slow raytracer!\n";
+	std::cout<<"Loading config...\n";
 	status = loadConfig("config.cfg", scene);
 	if(status)
 	{
@@ -76,12 +79,13 @@ void main()
 		percentDone = int(i/(double)scene.screenResX * 100.0f);
 		if(perc != percentDone)
 		{
-			printf("done: %d%s\n", percentDone, "%");
+			std::cout<<"\r"<<perc<<"\% done."<<" It took "<<double(clock())/CLOCKS_PER_SEC<<" seconds.";
 			perc = percentDone;
 		}
 	}
 
 	//writing output image
 	output.WriteToFile("output.bmp");
+	std::cin.get();
 
 }
