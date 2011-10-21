@@ -6,7 +6,7 @@
 
 // funzioni utili per semplificarci la vita
 
-inline vector_t operator+ (vector_t &v1, vector_t &v2)
+inline vector_t operator+ (const vector_t &v1, const vector_t &v2)
 {
 	vector_t v = { v1.x + v2.x, v1.y + v2.y, v1.z + v2.z };
 	return v;
@@ -36,7 +36,7 @@ inline double operator+= (color_t &c, double &i)
 	c.r += i;
 }
 
-inline color_t& operator+= (color_t &s, color_t &d)
+inline color_t& operator+= (color_t &s, const color_t &d)
 {
 	s.r += d.r;
 	s.g += d.g;
@@ -52,7 +52,7 @@ inline color_t& operator/= (color_t &s, const int &d)
 	return s;
 }
 
-inline color_t operator* (color_t &c, double &i)
+inline color_t operator* (const color_t &c, const double &i)
 {
 	color_t cl = { c.r * i, c.g * i, c.b * i };
 	return cl;

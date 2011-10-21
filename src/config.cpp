@@ -50,7 +50,7 @@
 	return temp;      
 }*/
 
-int loadConfig(char * path, scene_t &scene)
+int loadConfig(const char * path, scene_t &scene)
 {
 	std::ifstream ifs(path);
 	int line = 0;

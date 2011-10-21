@@ -20,7 +20,7 @@ enum OPCODES
 	UNKN
 };
 
-int loadConfig(char * path, scene_t &scene); // return line number in case of bad config, otherwise 0
+int loadConfig(const char * path, scene_t &scene); // return line number in case of bad config, otherwise 0
 
 int getOpcode(std::ifstream &ifs);
 

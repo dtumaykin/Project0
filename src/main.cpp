@@ -25,11 +25,11 @@
 #include "util.h"
 #include "config.h"
 #include "tracer.h"
-#include "easybmp\EasyBMP.h"
+#include "easybmp/EasyBMP.h"
 
 #define _CRT_SECURE_NO_WARNINGS // no warnings for fscanf(), fopen()
 
-void main()
+int main()
 {
 	int status; // need it for crash messages
 
@@ -43,7 +43,7 @@ void main()
 	{
 		printf("\nBad config: line %d!", status);
 		std::cin.get();
-		return;
+		return status;
 	}
 
 	BMP output;
@@ -88,4 +88,5 @@ void main()
 	output.WriteToFile("output.bmp");
 	std::cin.get();
 
+	return 0;
 }
